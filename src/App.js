@@ -47,53 +47,50 @@ class App extends React.Component {
       }
   }
 
-  logout = async (event) => {
-    event.preventDefault()
-    window.localStorage.clear()
-    this.setState({ user: null})
-  }
-
   handleLoginFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
   render() {
-    if (this.state.user === null) {
+    const loginForm = () => {
       return (
         <div>
-        <h2>Kirjaudu sovellukseen</h2>
-        <form onSubmit={this.login}>
-          <div>
-            käyttäjätunnus
-            <input
-              type="text"
-              name="username"
-              value={this.state.username}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <div>
-            salasana
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleLoginFieldChange}
-            />
-          </div>
-          <button type="submit">kirjaudu</button>
-        </form>
-      </div>
-    )
-  }
+          <h2>Kirjaudu sovellukseen</h2>
+          <form onSubmit={this.login}>
+            <div>
+              käyttäjätunnus
+              <input
+                type="text"
+                name="username"
+                value={this.state.username}
+                onChange={this.handleLoginFieldChange}
+              />
+            </div>
+            <div>
+              salasana
+              <input
+                type="password"
+                name="password"
+                value={this.state.password}
+                onChange={this.handleLoginFieldChange}
+              />
+            </div>
+            <button type="submit">kirjaudu</button>
+          </form>
+        </div>
+      )
+    }
+
+    const blogForm = () => {
+      //
+    }
+
+    {this.state.user === null ? loginForm() : blogForm()}
 
     return (
       <div>
         <h2>blogs</h2>
-        <p>
-          {this.state.user.name} logged in
-          <button onClick={this.logout}>logout</button>
-        </p>
+        <p>{this.state.user.name}</p>
         {this.state.blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
