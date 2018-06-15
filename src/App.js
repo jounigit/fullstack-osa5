@@ -47,12 +47,17 @@ class App extends React.Component {
       }
   }
 
+  logout = async (event) => {
+    event.preventDefault()
+    window.localStorage.clear()
+    this.setState({ user: null})
+  }
+
   handleLoginFieldChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
 
   render() {
-
     if (this.state.user === null) {
       return (
         <div>
@@ -85,7 +90,10 @@ class App extends React.Component {
     return (
       <div>
         <h2>blogs</h2>
-        <p>{this.state.user.name}</p>
+        <p>
+          {this.state.user.name} logged in
+          <button onClick={this.logout}>logout</button>
+        </p>
         {this.state.blogs.map(blog =>
           <Blog key={blog.id} blog={blog}/>
         )}
