@@ -1,0 +1,24 @@
+body {
+  margin: 10;
+  padding: 0;
+  font-family: sans-serif;
+}
+.message {
+  color: green;
+  /*background: green;*/
+  border: 2px solid green;
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.error {
+  color: red;
+  /*background: green;*/
+  border: 2px solid red;
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+td {
+  padding: 10px;
+}
