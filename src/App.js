@@ -154,11 +154,13 @@ class App extends React.Component {
           </div>
         }
 
-
-
-
         {this.state.blogs.map(blog =>
-          <Blog key={blog.id} blog={blog}/>
+          <Blog key={blog.id}
+            title={blog.title}
+            author={blog.author}
+            url={blog.url}
+            likes={blog.likes}
+            name={blog.user['name']} />
         )}
       </div>
     );
