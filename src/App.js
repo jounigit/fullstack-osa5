@@ -65,18 +65,19 @@ class App extends React.Component {
     this.setState({ user: null})
   }
 
-  addBlog = (event) => {
+  addBlog = async (event) => {
     event.preventDefault()
     this.blogForm.toggleVisibility()
 
+    try {
       const blogObj = {
         title: this.state.blogTitle,
         author: this.state.blogAuthor,
         url: this.state.blogUrl
       }
-      blogService
-        .create(blogObj)
-        .then(newBlog => {
+
+      const newBlog = await blogService.create(blogObj)
+
           this.setState({
               blogs: this.state.blogs.concat(newBlog),
               message: `a new blog '${newBlog.title}' by ${newBlog.author} added`,
@@ -87,18 +88,40 @@ class App extends React.Component {
             setTimeout(() => {
               this.setState({ message: null })
             }, 5000)
+        } catch(exception) {
+            this.setState({
+              error: 'something went wrong',
+              blogTitle: '',
+              blogAuthor: '',
+              blogUrl: ''
+            })
+            setTimeout(() => {
+              this.setState({ error: null })
+            }, 5000)
+          }
+  }
+
+  toggleLikeOf = (id) => {
+    return async () => {
+      try {
+        const blog = this.state.blogs.find(b => b.id === id)
+        const blogToServer = {...blog, likes: blog.likes+1, user: blog.user._id}
+        const blogToState = {...blog, likes: blog.likes+1}
+
+        await blogService.update(id, blogToServer)
+
+        this.setState({
+          blogs: this.state.blogs.map(blog => blog.id !== id ? blog : blogToState)
         })
-        .catch(error => {
-          this.setState({
-            error: 'something went wrong',
-            blogTitle: '',
-            blogAuthor: '',
-            blogUrl: ''
-          })
-          setTimeout(() => {
-            this.setState({ error: null })
-          }, 5000)
+      } catch (exception) {
+        this.setState({
+        error: 'updating error',
         })
+        setTimeout(() => {
+          this.setState({ error: null })
+        }, 5000)
+      }
+    }
   }
 
   handleLoginFieldChange = (event) => {
@@ -160,7 +183,8 @@ class App extends React.Component {
             author={blog.author}
             url={blog.url}
             likes={blog.likes}
-            name={blog.user['name']} />
+            name={blog.user['name']}
+            toggleLike={this.toggleLikeOf(blog.id)} />
         )}
       </div>
     );

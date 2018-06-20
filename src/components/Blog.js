@@ -35,7 +35,7 @@ class Blog extends React.Component {
         </div>
         <div style={showWhenVisible}>
             <a href="{this.props.url}">{this.props.url}</a><br />
-            {this.props.likes} likes <button>like</button><br />
+            {this.props.likes} likes <button onClick={this.props.toggleLike}>like</button><br />
             added by {this.props.name}<br />
         </div>
       </div>
