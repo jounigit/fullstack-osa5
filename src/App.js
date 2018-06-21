@@ -158,6 +158,19 @@ class App extends React.Component {
       </Togglable>
     )
 
+    const sortedBlogs = () => (
+      this.state.blogs.sort( (a,b) => b.likes - a.likes ).map(blog =>
+        <Blog key={blog.id}
+          title={blog.title}
+          author={blog.author}
+          url={blog.url}
+          likes={blog.likes}
+          name={blog.user['name']}
+          toggleLike={this.toggleLikeOf(blog.id)}
+        />
+      )
+    )
+
     return (
       <div>
 
@@ -177,15 +190,7 @@ class App extends React.Component {
           </div>
         }
 
-        {this.state.blogs.map(blog =>
-          <Blog key={blog.id}
-            title={blog.title}
-            author={blog.author}
-            url={blog.url}
-            likes={blog.likes}
-            name={blog.user['name']}
-            toggleLike={this.toggleLikeOf(blog.id)} />
-        )}
+        {sortedBlogs()}
       </div>
     );
   }
