@@ -30,13 +30,17 @@ class Blog extends React.Component {
     return (
       <div style={blogStyle}>
         <div onClick={this.toggleVisibility}>
-          {this.props.title}
+          {this.props.title},
           {this.props.author}
         </div>
         <div style={showWhenVisible}>
             <a href="{this.props.url}">{this.props.url}</a><br />
             {this.props.likes} likes <button onClick={this.props.toggleLike}>like</button><br />
             added by {this.props.name}<br />
+            {this.props.name === this.props.loggedUser || this.props.name === 'anonymous' ?
+              <button onClick={this.props.moveBlog}>delete</button> : ''
+            }
+
         </div>
       </div>
     )

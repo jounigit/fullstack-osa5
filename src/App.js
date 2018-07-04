@@ -65,6 +65,7 @@ class App extends React.Component {
     this.setState({ user: null})
   }
 
+  // Add blog
   addBlog = async (event) => {
     event.preventDefault()
     this.blogForm.toggleVisibility()
@@ -101,6 +102,42 @@ class App extends React.Component {
           }
   }
 
+  // Delete blog
+  deleteBlog = (id) => {
+    return async () => {
+      try {
+        const blog = this.state.blogs.find(b => b.id === id)
+
+        if (window.confirm("delete '"+blog.title+"' by "+blog.author)) {
+          const resBlog = await blogService.move(id)
+
+          console.log('RESPONSE:: ', resBlog)
+
+          const blogs = this.state.blogs.filter(b => b.id !== id)
+          this.setState({
+              blogs,
+              message: `deleted '${blog.title}'  `,
+            })
+            setTimeout(() => {
+              this.setState({message: null})
+            }, 5000)
+        }
+
+      } catch (exception) {
+          if (exception.name === 'JsonWebTokenError' ) {
+            this.setState({ error: exception.message })
+          } else {
+            console.log(exception)
+            this.setState({ error: 'malformatted id' })
+          }
+          setTimeout(() => {
+            this.setState({ error: null })
+          }, 5000)
+        }
+    }
+  }
+
+  // Update blog´s like
   toggleLikeOf = (id) => {
     return async () => {
       try {
@@ -165,8 +202,10 @@ class App extends React.Component {
           author={blog.author}
           url={blog.url}
           likes={blog.likes}
-          name={blog.user['name']}
+          name={blog.user === undefined ? 'anonymous' : blog.user['name']}
           toggleLike={this.toggleLikeOf(blog.id)}
+          loggedUser={this.state.user === null ? '' : this.state.user.name}
+          moveBlog={this.deleteBlog(blog.id)}
         />
       )
     )
