@@ -29,18 +29,17 @@ class Blog extends React.Component {
 
     return (
       <div style={blogStyle}>
-        <div onClick={this.toggleVisibility}>
-          <div style={{display: 'inline'}}>{this.props.title},</div>
-          <div style={{display: 'inline'}}>{this.props.author}</div>
+        <div onClick={this.toggleVisibility} className="titleAndAuthor">
+          <div className="title" style={{display: 'inline'}}>{this.props.title},</div>
+          <div className="author" style={{display: 'inline'}}>{this.props.author}</div>
         </div>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} className="content">
             <a href="{this.props.url}">{this.props.url}</a><br />
             {this.props.likes} likes <button onClick={this.props.toggleLike}>like</button><br />
             added by {this.props.name}<br />
             {this.props.name === this.props.loggedUser || this.props.name === 'anonymous' ?
               <button onClick={this.props.moveBlog}>delete</button> : ''
             }
-
         </div>
       </div>
     )
