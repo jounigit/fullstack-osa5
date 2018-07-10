@@ -30,8 +30,8 @@ class Blog extends React.Component {
     return (
       <div style={blogStyle}>
         <div onClick={this.toggleVisibility}>
-          {this.props.title},
-          {this.props.author}
+          <div style={{display: 'inline'}}>{this.props.title},</div>
+          <div style={{display: 'inline'}}>{this.props.author}</div>
         </div>
         <div style={showWhenVisible}>
             <a href="{this.props.url}">{this.props.url}</a><br />
