@@ -18,7 +18,6 @@ describe.only('<Blog />', () => {
     )
   })
 
-
   it('displays title', () => {
     const titleDiv = blogComponent.find('.title')
     console.log(blogComponent.debug())
