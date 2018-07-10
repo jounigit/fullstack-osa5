@@ -187,10 +187,9 @@ class App extends React.Component {
               <button onClick={this.logout}>logout</button>
             </p>
             {blogForm()}
+            {sortedBlogs()}
           </div>
         }
-
-        {sortedBlogs()}
       </div>
     );
   }
