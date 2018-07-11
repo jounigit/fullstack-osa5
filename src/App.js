@@ -29,7 +29,7 @@ class App extends React.Component {
       this.setState({ blogs })
     )
 
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       this.setState({user})
@@ -45,7 +45,7 @@ class App extends React.Component {
         password: this.state.password
       })
 
-      window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogService.setToken(user.token)
 
         this.setState({ username: '', password: '', user })
@@ -61,7 +61,7 @@ class App extends React.Component {
 
   logout = async (event) => {
     event.preventDefault()
-    window.localStorage.removeItem('loggedBlogappUser')
+    window.localStorage.removeItem('loggedBlogAppUser')
     this.setState({ user: null})
   }
 
