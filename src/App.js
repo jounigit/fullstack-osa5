@@ -1,7 +1,21 @@
 import React from 'react';
 
+const generateId = () => Number((Math.random() * 1000000).toFixed(0))
 
 class App extends React.Component {
+  addAnecdote = (event) => {
+    event.preventDefault()
+    const content = event.target.anecdote.value
+    this.props.store.dispatch({
+      type: 'NEW_ANECDOTE',
+      data: {
+        content: content,
+        id: generateId(),
+        votes: 0
+      }
+    })
+    event.target.anecdote.value = ''
+  }
   toggleVote = (id) => () => {
     this.props.store.dispatch({
       type: 'TOGGLE_VOTE',
@@ -26,9 +40,9 @@ class App extends React.Component {
           </div>
         )}
         <h2>create new</h2>
-        <form>
-          <div><input /></div>
-          <button>create</button>
+        <form onSubmit={this.addAnecdote}>
+          <div><input name="anecdote" /></div>
+          <button type="submit">create</button>
         </form>
       </div>
     )
